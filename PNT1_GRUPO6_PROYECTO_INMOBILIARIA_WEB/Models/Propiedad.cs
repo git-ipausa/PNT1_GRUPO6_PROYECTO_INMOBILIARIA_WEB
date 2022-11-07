@@ -12,12 +12,18 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdPropiedad { get; set; }
+
+        [StringLength(200)]
+        [Display(Name = "Descripción:")]
         public string Descripcion { get; set; }
 
+        [Display(Name = "Precio en dólares:")]
         public double Precio { get; set; }
 
+        [Display(Name = "Foto:")]
         public string SrcImagen { get; set; }
 
+        [Display(Name = "Tipo de propiedad:")]
         public TipoPropiedad Tipo { get; set; }
 
         
