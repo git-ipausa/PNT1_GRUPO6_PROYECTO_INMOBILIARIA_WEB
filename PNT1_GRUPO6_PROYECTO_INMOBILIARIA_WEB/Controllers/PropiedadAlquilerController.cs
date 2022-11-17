@@ -149,5 +149,57 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         {
             return _context.PropiedadVenta.Any(e => e.IdPropiedad == id);
         }
+
+        // GET: PropiedadAlquiler/Alquilar/5
+        public async Task<IActionResult> Alquilar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var propiedadAlquiler = await _context.PropiedadVenta.FindAsync(id);
+            if (propiedadAlquiler == null)
+            {
+                return NotFound();
+            }
+            return View(propiedadAlquiler);
+        }
+
+        // POST: PropiedadAlquiler/Alquilar/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Alquilar(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,SrcImagen,Tipo")] PropiedadAlquiler propiedadAlquiler)
+        {
+            if (id != propiedadAlquiler.IdPropiedad)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(propiedadAlquiler);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PropiedadAlquilerExists(propiedadAlquiler.IdPropiedad))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(propiedadAlquiler);
+        }
+
     }
 }
