@@ -1,0 +1,49 @@
+﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadAlquiler
+
+<div>
+    <h4>Propiedad a Alquilar</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CantMeses)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CantMeses)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SrcImagen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SrcImagen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.usuario)
+        </dt>
+        
+
+
+        
+    </dl>
+</div>
+<div>
+    <a asp-action="CalcularContrato" asp-route-id="@Model.IdPropiedad">Firmar contrato</a> |
+    <a asp-action="Index">Volver a la lista</a>
+</div>

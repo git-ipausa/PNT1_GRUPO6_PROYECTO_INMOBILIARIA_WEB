@@ -47,6 +47,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
         
         [ForeignKey("Usuario")]
         [Column("IdUsuario")]
+        [Display(Name = "Usuario:")]
         public Usuario usuario { get; set; }
 
         abstract public void CalcularContrato();

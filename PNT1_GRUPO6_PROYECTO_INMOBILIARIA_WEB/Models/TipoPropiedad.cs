@@ -6,6 +6,6 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
 {
     public enum TipoPropiedad
     {
-        PH, DEPARTAMENTO, CASA
+        PH, Departamento, Casa
     }
 }
