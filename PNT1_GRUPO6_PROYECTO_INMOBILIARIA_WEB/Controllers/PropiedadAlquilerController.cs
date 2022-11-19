@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB;
 using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Context;
+using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models;
 
 namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
 {
@@ -157,7 +158,8 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.ListaUsuarios = await _context.Usuarios.ToListAsync();
+            
             var propiedadAlquiler = await _context.PropiedadVenta.FindAsync(id);
             if (propiedadAlquiler == null)
             {
