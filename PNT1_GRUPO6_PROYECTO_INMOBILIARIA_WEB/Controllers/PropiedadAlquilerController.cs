@@ -78,6 +78,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
             return View(propiedadAlquiler);
         }
 
+
         // GET: PropiedadAlquiler/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -99,7 +100,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,SrcImagen,Tipo")] PropiedadAlquiler propiedadAlquiler)
+        public async Task<IActionResult> Edit(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
         {
             if (id != propiedadAlquiler.IdPropiedad)
             {
@@ -110,6 +111,17 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
             {
                 try
                 {
+                    if (propiedadAlquiler.FotoPropiedad != null)
+                    {
+                        string folder = "images/prop_alquiler/";
+                        folder += Guid.NewGuid().ToString() + "_" + propiedadAlquiler.FotoPropiedad.FileName;
+
+                        propiedadAlquiler.FotoPropiedadUrl = "/" + folder;
+
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                        await propiedadAlquiler.FotoPropiedad.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    }
                     _context.Update(propiedadAlquiler);
                     await _context.SaveChangesAsync();
                 }
@@ -185,7 +197,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Alquilar(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,SrcImagen,Tipo")] PropiedadAlquiler propiedadAlquiler)
+        public async Task<IActionResult> Alquilar(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
         {
             if (id != propiedadAlquiler.IdPropiedad)
             {

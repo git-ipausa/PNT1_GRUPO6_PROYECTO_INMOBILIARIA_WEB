@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Context;
 using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models;
@@ -58,7 +56,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPropiedad,Descripcion,Precio,SrcImagen,Tipo")] PropiedadVenta propiedadVenta)
+        public async Task<IActionResult> Create([Bind("IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadVenta)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +99,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPropiedad,Descripcion,Precio,SrcImagen,Tipo")] PropiedadVenta propiedadVenta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadVenta)
         {
             if (id != propiedadVenta.IdPropiedad)
             {
@@ -112,6 +110,17 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
             {
                 try
                 {
+                    if (propiedadVenta.FotoPropiedad != null)
+                    {
+                        string folder = "images/prop_alquiler/";
+                        folder += Guid.NewGuid().ToString() + "_" + propiedadVenta.FotoPropiedad.FileName;
+
+                        propiedadVenta.FotoPropiedadUrl = "/" + folder;
+
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                        await propiedadVenta.FotoPropiedad.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    }
                     _context.Update(propiedadVenta);
                     await _context.SaveChangesAsync();
                 }
