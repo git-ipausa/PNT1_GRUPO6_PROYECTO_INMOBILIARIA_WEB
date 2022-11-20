@@ -1,8 +1,34 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model IEnumerable<PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Propiedad>
 
-<div class="text-center" >
-    <h2 class="display-4">Bienvenido a su Inmobiliaria de confianza</h2>
-    <img src="/images/ortpropimagen.jpg" class="img-fluid" alt="Responsive image">
+<div class="container">
+    <div class="text-center">
+        <h2 class="display-4">Bienvenido a su Inmobiliaria de confianza</h2>
+    </div>
+
+    <div class="row">
+       @if (Model != null)
+            {
+            @foreach (var prop in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="@prop.FotoPropiedadUrl" class="img-thumbnail" />
+                    <div class="card-body">
+                        <h3 class="card-title">@prop.Descripcion</h3>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a asp-action="Details" asp-route-id="@prop.IdPropiedad"
+                                   class="btn btn-sm btn-outline-secondary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        }
+    </div>
+
 </div>

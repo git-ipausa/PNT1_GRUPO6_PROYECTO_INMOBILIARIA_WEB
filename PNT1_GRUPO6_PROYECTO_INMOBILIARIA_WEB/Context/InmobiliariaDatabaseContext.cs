@@ -21,10 +21,10 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Context
        
         //Mapeo una lista de propiedades en alquiler para que EF genere una tabla de propiedades en alquiler
 
-        public DbSet<PropiedadVenta> PropiedadAlquiler { get; set; }
+        public DbSet<PropiedadVenta> PropiedadVenta { get; set; }
 
         //Mapeo una lista de propiedades en venta para que EF genere una tabla de propiedades en venta
 
-        public DbSet<PropiedadAlquiler> PropiedadVenta { get; set; }
+        public DbSet<PropiedadAlquiler> PropiedadAlquiler { get; set; }
     }
 }
