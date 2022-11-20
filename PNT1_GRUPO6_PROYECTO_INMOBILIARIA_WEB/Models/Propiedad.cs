@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models;
 
 namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
 {
@@ -22,21 +20,13 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
         [Display(Name = "Precio en dólares:")]
         public double Precio { get; set; }
 
-        //[NotMapped]
+        [NotMapped]
         [Display(Name = "Foto:")]
-        public string SrcImagen { get; set; }
-        //public IFormFile PhotoAvatar { get; set; }
+        [Required]
+        public IFormFile FotoPropiedad { get; set; }
+        public string FotoPropiedadUrl { get; set; }
 
-        /*
-         public string ImageName { get; set; }
-          public byte[] PhotoFile { get; set; }
-          public string ImageMimeType { get; set; }
-        */
-
-
-
-
-
+        [NotMapped]
         [Display(Name = "Tipo de propiedad:")]
         public TipoPropiedad Tipo { get; set; }
 
