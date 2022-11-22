@@ -34,12 +34,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tipo)
         </dd>
-        <div class="card" style="width: 18rem;">
+        <dd class="card" style="width: 18rem;">
             <img class="img-fluid img-thumbnail" src="@Model.FotoPropiedadUrl" />
-        </div>
+        </dd>
     </dl>
         </div>
     <div>
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.IdPropiedad">Modificar</a> |
+        <a class="btn btn-primary" asp-action="Alquilar" asp-route-id="@Model.IdPropiedad">Alquilar</a> |
         <a class="btn btn-primary" asp-action="Index">Volver a la lista</a>
     </div>

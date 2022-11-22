@@ -1,5 +1,9 @@
 ﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadAlquiler
 
+@{
+    ViewData["Title"] = "Alquilar";
+}
+
 <div>
     <h4>Propiedad a Alquilar</h4>
     <hr />
@@ -23,31 +27,43 @@
             @Html.DisplayFor(model => model.Precio)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoPropiedad)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FotoPropiedad)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Tipo)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tipo)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.usuario)            
-        </dt>
-        <dd class="col-sm-10">
-            <select asp-for="usuario" class="form-control" asp-items="@(new SelectList(ViewBag.ListaUsuarios,"IdUsuario", "Nombre", "Seleccione"))"></select>
-            
-
+        <dd class="card" style="width: 18rem;">
+            <img class="img-fluid img-thumbnail" src="@Model.FotoPropiedadUrl" />
         </dd>
-
-
-        
+       
     </dl>
 </div>
-<div>
-    <a asp-action="CalcularContrato" asp-route-id="@Model.IdPropiedad">Firmar contrato</a> |
-    <a asp-action="Index">Volver a la lista</a>
+
+<div class="col-md-4">
+    <form method="post" asp-action="Alquilar" asp-controller="PropiedadAlquiler">
+
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.usuario)
+            </div>
+            <select asp-for="usuario" class="form-control" asp-items="@(new SelectList(ViewBag.ListaUsuarios,"IdUsuario", "Nombre"))">
+                <option selected="selected" value="">Seleccione</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <input type="hidden" asp-for = "IdPropiedad" />
+            <input type="submit" value="Firmar contrato" class="btn btn-primary" /> |
+            <a class="btn btn-primary" asp-action="Index">Volver a la lista</a>
+        </div>
+    </form>
 </div>
+
+<div>  
+   @* <a asp-action="Alquilar" asp-route-id="@Model.IdPropiedad">Firmar contrato</a> |*@
+    @*<a class="btn btn-primary" asp-action="Index">Volver a la lista</a>*@
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

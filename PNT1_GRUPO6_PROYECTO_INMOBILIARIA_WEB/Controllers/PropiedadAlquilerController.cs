@@ -197,9 +197,12 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Alquilar(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
+        public async Task<IActionResult> Alquilar(int IdProp, int IdUsuario)
         {
-            if (id != propiedadAlquiler.IdPropiedad)
+            PropiedadAlquiler propiedadAlquiler = new PropiedadAlquiler();
+
+
+            if (IdProp != propiedadAlquiler.IdPropiedad)
             {
                 return NotFound();
             }
@@ -208,7 +211,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
             {
                 try
                 {
-                    _context.Update(propiedadAlquiler);
+                    _context.Update(propiedadAlquiler.usuario.IdUsuario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
