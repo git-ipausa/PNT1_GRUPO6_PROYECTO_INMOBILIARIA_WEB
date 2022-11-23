@@ -233,8 +233,8 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                         throw;
                     }
                 }
-           
-            return RedirectToAction(nameof(Index));
+
+            return View("Details",propiedadAlquiler);
         }
 
     }

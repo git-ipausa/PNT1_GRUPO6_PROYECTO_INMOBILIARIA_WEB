@@ -233,7 +233,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                 }
             }
 
-            return RedirectToAction(nameof(Index));
+            return View("Details", propiedadVenta);
         }
     }
 }
