@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Context;
+using PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models;
+
 
 namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
 {
@@ -24,7 +26,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // GET: PropiedadAlquiler
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PropiedadAlquiler.ToListAsync());
+            return View(await _context.PropiedadAlquiler.Include(x=>x.usuario).ToListAsync());
         }
 
         // GET: PropiedadAlquiler/Details/5
@@ -35,7 +37,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                 return NotFound();
             }
 
-            var propiedadAlquiler = await _context.PropiedadAlquiler
+            var propiedadAlquiler = await _context.PropiedadAlquiler.Include(x => x.usuario)
                 .FirstOrDefaultAsync(m => m.IdPropiedad == id);
             if (propiedadAlquiler == null)
             {
@@ -56,7 +58,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
+        public async Task<IActionResult> Create([Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadAlquiler)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                     string folder = "images/prop_alquiler/";
                     folder += Guid.NewGuid().ToString() + "_" + propiedadAlquiler.FotoPropiedad.FileName;
 
-                    propiedadAlquiler.FotoPropiedadUrl = "/"+folder;
+                    propiedadAlquiler.FotoPropiedadUrl = "/" + folder;
 
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
 
@@ -100,7 +102,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
+        public async Task<IActionResult> Edit(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadAlquiler)
         {
             if (id != propiedadAlquiler.IdPropiedad)
             {
@@ -183,7 +185,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                 return NotFound();
             }
             ViewBag.ListaUsuarios = await _context.Usuarios.ToListAsync();
-            
+
             var propiedadAlquiler = await _context.PropiedadAlquiler.FindAsync(id);
             if (propiedadAlquiler == null)
             {
@@ -197,21 +199,28 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Alquilar(int IdProp, int IdUsuario)
+        public async Task<IActionResult> Alquilar(PropiedadVenta model)
         {
-            PropiedadAlquiler propiedadAlquiler = new PropiedadAlquiler();
+            PropiedadVenta propiedadAlquiler = _context.PropiedadAlquiler.SingleOrDefault(b => b.IdPropiedad == model.IdPropiedad);
 
-
-            if (IdProp != propiedadAlquiler.IdPropiedad)
+            if (propiedadAlquiler == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            Usuario usuarioDB = _context.Usuarios.SingleOrDefault(b => b.IdUsuario == model.usuario.IdUsuario);
+
+            if (usuarioDB == null)
             {
+                return NotFound();
+            }
+
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
-                    _context.Update(propiedadAlquiler.usuario.IdUsuario);
+                    propiedadAlquiler.usuario = usuarioDB;
+                    _context.Update(propiedadAlquiler);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -225,9 +234,10 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(propiedadAlquiler);
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //return View(propiedadAlquiler);
+            return RedirectToAction(nameof(Index));
         }
 
     }

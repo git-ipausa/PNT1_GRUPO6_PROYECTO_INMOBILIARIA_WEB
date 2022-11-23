@@ -24,7 +24,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // GET: PropiedadVenta
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PropiedadVenta.ToListAsync());
+            return base.View(await _context.PropiedadVenta.ToListAsync());
         }
 
         // GET: PropiedadVenta/Details/5
@@ -35,7 +35,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                 return NotFound();
             }
 
-            var propiedadVenta = await _context.PropiedadVenta
+            var propiedadVenta = await _context.PropiedadVenta.Include(x => x.usuario)
                 .FirstOrDefaultAsync(m => m.IdPropiedad == id);
             if (propiedadVenta == null)
             {
@@ -99,7 +99,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadVenta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] Models.PropiedadVenta propiedadVenta)
         {
             if (id != propiedadVenta.IdPropiedad)
             {
@@ -174,4 +174,48 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
             return _context.PropiedadVenta.Any(e => e.IdPropiedad == id);
         }
     }
+
+
+
+    /*public async Task<IActionResult> Comprar(PropiedadVenta model)
+    {
+        
+        PropiedadVenta propiedadVenta = _context.PropiedadVenta.SingleOrDefault(b => b.IdPropiedad == model.IdPropiedad);
+
+        if (propiedadVenta == null)
+        {
+            return NotFound();
+        }
+
+        Usuario usuarioDB = _context.Usuarios.SingleOrDefault(b => b.IdUsuario == model.usuario.IdUsuario);
+
+        if (usuarioDB == null)
+        {
+            return NotFound();
+        }
+
+        //if (ModelState.IsValid)
+        //{
+        try
+        {
+            propiedadVenta.usuario = usuarioDB;
+            _context.Update(propiedadVenta);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!PropiedadAlquilerExists(propiedadVenta.IdPropiedad))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+        //    return RedirectToAction(nameof(Index));
+        //}
+        //return View(propiedadAlquiler);
+        return RedirectToAction(nameof(Index));
+    }*/
 }

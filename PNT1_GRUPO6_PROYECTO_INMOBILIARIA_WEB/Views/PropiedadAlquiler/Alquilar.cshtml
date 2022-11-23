@@ -1,4 +1,4 @@
-﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadAlquiler
+﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadVenta
 
 @{
     ViewData["Title"] = "Alquilar";
@@ -39,24 +39,24 @@
     </dl>
 </div>
 
-<div class="col-md-4">
-    <form method="post" asp-action="Alquilar" asp-controller="PropiedadAlquiler">
+<div class="col-md-4">   
+        <form method="post" enctype="multipart/form-data" asp-action="Alquilar" asp-controller="PropiedadAlquiler">
 
-        <div class="row">
-            <div class="col-sm-2">
-                @Html.DisplayNameFor(model => model.usuario)
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.usuario)
+                </div>
+                <select asp-for="usuario.IdUsuario" class="form-control" asp-items="@(new SelectList(ViewBag.ListaUsuarios,"IdUsuario", "Nombre"))">
+                    <option selected="selected" value="">Seleccione</option>
+                </select>
             </div>
-            <select asp-for="usuario" class="form-control" asp-items="@(new SelectList(ViewBag.ListaUsuarios,"IdUsuario", "Nombre"))">
-                <option selected="selected" value="">Seleccione</option>
-            </select>
-        </div>
-        <br>
-        <div class="row">
-            <input type="hidden" asp-for = "IdPropiedad" />
-            <input type="submit" value="Firmar contrato" class="btn btn-primary" /> |
-            <a class="btn btn-primary" asp-action="Index">Volver a la lista</a>
-        </div>
-    </form>
+            <br>
+            <div class="row">
+                <input type="hidden" asp-for="IdPropiedad" value="@Model.IdPropiedad" />
+                <input type="submit" value="Firmar contrato" class="btn btn-primary" /> |
+                <a class="btn btn-primary" asp-action="Index">Volver a la lista</a>
+            </div>
+        </form>
 </div>
 
 <div>  

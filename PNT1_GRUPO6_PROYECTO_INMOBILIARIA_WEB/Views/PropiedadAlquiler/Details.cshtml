@@ -1,4 +1,4 @@
-﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadAlquiler
+﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadVenta
 
 @{
     ViewData["Title"] = "Details";
@@ -34,12 +34,19 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tipo)
         </dd>
+
+        <dt class="col-sm-10" hidden="@(Model.usuario == null)">
+            @(Model.usuario?.GetInfo())
+
+        </dt>
+        
         <dd class="card" style="width: 18rem;">
             <img class="img-fluid img-thumbnail" src="@Model.FotoPropiedadUrl" />
         </dd>
+
     </dl>
         </div>
     <div>
-        <a class="btn btn-primary" asp-action="Alquilar" asp-route-id="@Model.IdPropiedad">Alquilar</a> |
+        <a class="btn btn-primary" asp-action="Alquilar" asp-route-id="@Model.IdPropiedad" hidden="@(Model.usuario != null)">Alquilar</a> |
         <a class="btn btn-primary" asp-action="Index">Volver a la lista</a>
     </div>

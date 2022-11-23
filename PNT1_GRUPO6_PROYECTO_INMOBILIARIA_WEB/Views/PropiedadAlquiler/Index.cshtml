@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadAlquiler>
+﻿@model IEnumerable<PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadVenta>
 
 @{
     ViewData["Title"] = "Index";
@@ -52,7 +52,7 @@
                 <a asp-action="Edit" asp-route-id="@item.IdPropiedad">Modificar</a> |
                 <a asp-action="Details" asp-route-id="@item.IdPropiedad">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.IdPropiedad">Borrar</a> |
-                <a asp-action="Alquilar" asp-route-id="@item.IdPropiedad">Alquilar</a>
+                <a asp-action="Alquilar" asp-route-id="@item.IdPropiedad" hidden="@(item.usuario!=null)">Alquilar</a>
             </td>
         </tr>
 }
