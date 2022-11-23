@@ -24,7 +24,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // GET: PropiedadVenta
         public async Task<IActionResult> Index()
         {
-            return base.View(await _context.PropiedadVenta.ToListAsync());
+            return base.View(await _context.PropiedadVenta.Include(x => x.usuario).ToListAsync());
         }
 
         // GET: PropiedadVenta/Details/5
@@ -99,7 +99,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] Models.PropiedadVenta propiedadVenta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadVenta)
         {
             if (id != propiedadVenta.IdPropiedad)
             {
@@ -173,49 +173,70 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         {
             return _context.PropiedadVenta.Any(e => e.IdPropiedad == id);
         }
-    }
+    
 
-
-
-    /*public async Task<IActionResult> Comprar(PropiedadVenta model)
-    {
-        
-        PropiedadVenta propiedadVenta = _context.PropiedadVenta.SingleOrDefault(b => b.IdPropiedad == model.IdPropiedad);
-
-        if (propiedadVenta == null)
+        // GET: PropiedadAlquiler/Comprar/5
+        public async Task<IActionResult> Comprar(int? id)
         {
-            return NotFound();
-        }
-
-        Usuario usuarioDB = _context.Usuarios.SingleOrDefault(b => b.IdUsuario == model.usuario.IdUsuario);
-
-        if (usuarioDB == null)
-        {
-            return NotFound();
-        }
-
-        //if (ModelState.IsValid)
-        //{
-        try
-        {
-            propiedadVenta.usuario = usuarioDB;
-            _context.Update(propiedadVenta);
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!PropiedadAlquilerExists(propiedadVenta.IdPropiedad))
+            if (id == null)
             {
                 return NotFound();
             }
-            else
+            ViewBag.ListaUsuarios = await _context.Usuarios.ToListAsync();
+
+            var propiedadVenta = await _context.PropiedadVenta.FindAsync(id);
+            if (propiedadVenta == null)
             {
-                throw;
+                return NotFound();
             }
+            return View(propiedadVenta);
         }
-        //    return RedirectToAction(nameof(Index));
-        //}
-        //return View(propiedadAlquiler);
-        return RedirectToAction(nameof(Index));
-    }*/
+
+        // POST: PropiedadAlquiler/Alquilar/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Comprar(PropiedadVenta model)
+        {
+            PropiedadVenta propiedadVenta = _context.PropiedadVenta.SingleOrDefault(b => b.IdPropiedad == model.IdPropiedad);
+
+            if (propiedadVenta == null)
+            {
+                return NotFound();
+            }
+
+            Usuario usuarioDB = _context.Usuarios.SingleOrDefault(b => b.IdUsuario == model.usuario.IdUsuario);
+
+            if (usuarioDB == null)
+            {
+                return NotFound();
+            }
+
+            //if (ModelState.IsValid)
+            //{
+            try
+            {
+                propiedadVenta.usuario = usuarioDB;
+                _context.Update(propiedadVenta);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PropiedadVentaExists(propiedadVenta.IdPropiedad))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }
+
+
+

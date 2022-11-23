@@ -26,21 +26,15 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
         public IFormFile FotoPropiedad { get; set; }
         public string FotoPropiedadUrl { get; set; }
 
-        [NotMapped]
         [Display(Name = "Tipo de propiedad:")]
         public TipoPropiedad Tipo { get; set; }
 
-        //agregar usuario como nullable (poniendo ? adelante del tipo)
-
-        //public int? IdUsuario { get; set; }
-        //public virtual Usuario usuario { get; set; }
-        
         [ForeignKey("Usuario")]
         [Column("IdUsuario")]
         [Display(Name = "Usuario:")]
         public Usuario usuario { get; set; }
 
-        abstract public void CalcularContrato();
+        abstract public string Contrato();
 
     }
 }

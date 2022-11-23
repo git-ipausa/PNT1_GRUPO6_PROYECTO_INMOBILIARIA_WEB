@@ -1,4 +1,4 @@
-﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadVenta
+﻿@model PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.PropiedadAlquiler
 
 @{
     ViewData["Title"] = "Details";
@@ -36,10 +36,10 @@
         </dd>
 
         <dt class="col-sm-10" hidden="@(Model.usuario == null)">
-            @(Model.usuario?.GetInfo())
+            @(Model.Contrato())
 
         </dt>
-        
+        <br />
         <dd class="card" style="width: 18rem;">
             <img class="img-fluid img-thumbnail" src="@Model.FotoPropiedadUrl" />
         </dd>

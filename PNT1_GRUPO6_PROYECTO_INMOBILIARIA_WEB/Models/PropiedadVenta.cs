@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models
+
+namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
 {
     public class PropiedadVenta : Propiedad
     {
-        public override void CalcularContrato()
+        public override string Contrato()
         {
-            throw new NotImplementedException();
+            return "La persona " + usuario.Nombre + " " + usuario.Apellido + " con E-mail: " + usuario.Email + " ha comprado esta propiedad";
         }
 
     }

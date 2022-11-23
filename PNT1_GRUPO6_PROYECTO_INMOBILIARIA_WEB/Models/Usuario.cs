@@ -34,9 +34,9 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Models
         [Display(Name = "Contraseña:")]
         public string Contrasena { get; set; }
 
-        public string GetInfo()
-        {
-            return "La persona " + this.Nombre + " " + this.Apellido + " " + this.Email + " ha alquilado esta propiedad";
-        } 
+        //public string GetInfo()
+        //{
+        //    return "La persona " + this.Nombre + " " + this.Apellido + " " + this.Email + " ha alquilado esta propiedad";
+        //} 
     }
 }

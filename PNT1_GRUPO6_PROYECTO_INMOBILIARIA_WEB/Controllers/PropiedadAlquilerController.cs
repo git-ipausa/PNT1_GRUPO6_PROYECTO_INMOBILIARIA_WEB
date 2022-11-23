@@ -16,8 +16,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         private readonly InmobiliariaDatabaseContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PropiedadAlquilerController(InmobiliariaDatabaseContext context,
-            IWebHostEnvironment webHostEnvironment)
+        public PropiedadAlquilerController(InmobiliariaDatabaseContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -58,7 +57,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadAlquiler)
+        public async Task<IActionResult> Create([Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +101,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadVenta propiedadAlquiler)
+        public async Task<IActionResult> Edit(int id, [Bind("CantMeses,IdPropiedad,Descripcion,Precio,FotoPropiedad,Tipo")] PropiedadAlquiler propiedadAlquiler)
         {
             if (id != propiedadAlquiler.IdPropiedad)
             {
@@ -201,7 +200,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Alquilar(PropiedadVenta model)
         {
-            PropiedadVenta propiedadAlquiler = _context.PropiedadAlquiler.SingleOrDefault(b => b.IdPropiedad == model.IdPropiedad);
+            PropiedadAlquiler propiedadAlquiler = _context.PropiedadAlquiler.SingleOrDefault(b => b.IdPropiedad == model.IdPropiedad);
 
             if (propiedadAlquiler == null)
             {
@@ -234,9 +233,7 @@ namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB.Controllers
                         throw;
                     }
                 }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //return View(propiedadAlquiler);
+           
             return RedirectToAction(nameof(Index));
         }
 

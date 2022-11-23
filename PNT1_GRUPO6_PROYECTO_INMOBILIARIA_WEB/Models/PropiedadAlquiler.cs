@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PNT1_GRUPO6_PROYECTO_INMOBILIARIA_WEB
 {
-    public class PropiedadVenta : Propiedad
+    public class PropiedadAlquiler : Propiedad
     {
         [Display(Name = "Cantidad de meses:")]
         public int CantMeses { get; set; }
 
-        public override void CalcularContrato()
+        public override string Contrato()
         {
-            throw new NotImplementedException();
+            return "La persona " + usuario.Nombre + " " + usuario.Apellido + " con E-mail: " + usuario.Email + " ha alquilado esta propiedad";
         }
 
 
